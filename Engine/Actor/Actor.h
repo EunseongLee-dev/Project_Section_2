@@ -16,7 +16,7 @@ namespace Wanted
 
 	public:
 		Actor(
-			const char* image = "",
+			const wchar_t* image = L"",
 			const Vector2& position = Vector2::Zero,
 			Color color = Color::White
 		);
@@ -41,7 +41,7 @@ namespace Wanted
 		bool TestIntersect(const Actor* const other);
 
 		// 액터의 이미지 값 변경 함수.
-		void ChangeImage(const char* newImage);
+		void ChangeImage(const wchar_t* newImage);
 
 		// 위치 변경 및 읽기 함수.
 		void SetPosition(const Vector2& newPosition);
@@ -82,7 +82,7 @@ namespace Wanted
 		bool destroyRequested = false;
 
 		// 그릴 문자(이미지).
-		char* image = nullptr;
+		wchar_t* image = nullptr;
 
 		// 문자열 길이.
 		int width = 0;

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36908.2 d17.14
+VisualStudioVersion = 17.14.36908.2
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sandbox", "Sandbox\Sandbox.vcxproj", "{212429A3-828A-462E-84C4-9DB3BF6D8C27}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -10,32 +10,22 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sandbox", "Sandbox\Sandbox.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "솔루션 항목", "솔루션 항목", "{2A3A057F-5D22-31FD-628C-DF5EF75AEF1E}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Engine", "..\Paper_Hunter\Engine\Engine.vcxproj", "{74735664-3A6A-4F8A-A2F4-40C1BF87A0DC}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Engine", "Engine\Engine.vcxproj", "{74735664-3A6A-4F8A-A2F4-40C1BF87A0DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
-		Debug|x86 = Debug|x86
 		Release|x64 = Release|x64
-		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{212429A3-828A-462E-84C4-9DB3BF6D8C27}.Debug|x64.ActiveCfg = Debug|x64
 		{212429A3-828A-462E-84C4-9DB3BF6D8C27}.Debug|x64.Build.0 = Debug|x64
-		{212429A3-828A-462E-84C4-9DB3BF6D8C27}.Debug|x86.ActiveCfg = Debug|Win32
-		{212429A3-828A-462E-84C4-9DB3BF6D8C27}.Debug|x86.Build.0 = Debug|Win32
 		{212429A3-828A-462E-84C4-9DB3BF6D8C27}.Release|x64.ActiveCfg = Release|x64
 		{212429A3-828A-462E-84C4-9DB3BF6D8C27}.Release|x64.Build.0 = Release|x64
-		{212429A3-828A-462E-84C4-9DB3BF6D8C27}.Release|x86.ActiveCfg = Release|Win32
-		{212429A3-828A-462E-84C4-9DB3BF6D8C27}.Release|x86.Build.0 = Release|Win32
 		{74735664-3A6A-4F8A-A2F4-40C1BF87A0DC}.Debug|x64.ActiveCfg = Debug|x64
 		{74735664-3A6A-4F8A-A2F4-40C1BF87A0DC}.Debug|x64.Build.0 = Debug|x64
-		{74735664-3A6A-4F8A-A2F4-40C1BF87A0DC}.Debug|x86.ActiveCfg = Debug|x64
-		{74735664-3A6A-4F8A-A2F4-40C1BF87A0DC}.Debug|x86.Build.0 = Debug|x64
 		{74735664-3A6A-4F8A-A2F4-40C1BF87A0DC}.Release|x64.ActiveCfg = Release|x64
 		{74735664-3A6A-4F8A-A2F4-40C1BF87A0DC}.Release|x64.Build.0 = Release|x64
-		{74735664-3A6A-4F8A-A2F4-40C1BF87A0DC}.Release|x86.ActiveCfg = Release|x64
-		{74735664-3A6A-4F8A-A2F4-40C1BF87A0DC}.Release|x86.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -75,9 +75,9 @@ namespace Wanted
 
 		// 콘솔 버퍼에 있는 화면 지우기.
 		// 그래픽스 -> 지우기 -> 한 색상(또는 값)으로 덮어쓰기.
-		FillConsoleOutputCharacterA(
+		FillConsoleOutputCharacterW(
 			buffer,
-			' ',
+			L' ',
 			screenSize.x * screenSize.y,
 			Vector2::Zero,
 			&writtenCount
@@ -96,7 +96,7 @@ namespace Wanted
 		writeRegion.Bottom = static_cast<short>(screenSize.y - 1);
 
 		// 버퍼에 전달 받은 글자 배열 설정.
-		WriteConsoleOutputA(
+		WriteConsoleOutputW(
 			buffer,
 			charInfo,
 			screenSize,
