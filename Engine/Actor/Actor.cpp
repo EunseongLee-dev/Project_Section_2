@@ -44,7 +44,8 @@ namespace Wanted
 	/*	Vector2 screenPos = position - camera;*/
 
 		// 렌더러에 데이터 제출.
-		Renderer::Get().Submit(image, position, color, sortingOrder);
+		Vector2 visualPos = Vector2(position.x * 2, position.y);
+		Renderer::Get().Submit(image, visualPos, color, sortingOrder);
 	}
 
 	void Actor::Destroy()

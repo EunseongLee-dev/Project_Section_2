@@ -35,17 +35,17 @@ namespace Wanted
 		rect.Right = static_cast<short>(screenSize.x - 1);
 		rect.Bottom = static_cast<short>(screenSize.y - 1);
 
-		if (!SetConsoleWindowInfo(buffer, true, &rect))
-		{
-			//DWORD errorCode = GetLastError();
-			std::cerr << "Failed to set console window info.\n";
-			__debugbreak();
-		}
-
 		// 버퍼 크기 설정.
 		if (!SetConsoleScreenBufferSize(buffer, screenSize))
 		{
 			std::cerr << "Failed to set console buffer size.\n";
+			__debugbreak();
+		}
+
+		if (!SetConsoleWindowInfo(buffer, true, &rect))
+		{
+			//DWORD errorCode = GetLastError();
+			std::cerr << "Failed to set console window info.\n";
 			__debugbreak();
 		}
 
