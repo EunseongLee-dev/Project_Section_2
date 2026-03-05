@@ -90,11 +90,13 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Actor\Monster.cpp" />
     <ClCompile Include="Actor\Player.cpp" />
     <ClCompile Include="Level\ArenaLevel.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Actor\Monster.h" />
     <ClInclude Include="Actor\Player.h" />
     <ClInclude Include="Level\ArenaLevel.h" />
   </ItemGroup>

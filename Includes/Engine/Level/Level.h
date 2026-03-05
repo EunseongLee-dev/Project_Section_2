@@ -41,6 +41,10 @@ namespace Wanted
 		// 카메라 고정 함수
 		virtual Vector2 GetCameraTarget() const;
 
+		// Getter
+		// 액터 반환 함수
+		inline const std::vector<Actor*>& GetActors() const { return actors; }
+
 
 	protected:
 		// 액터 배열.

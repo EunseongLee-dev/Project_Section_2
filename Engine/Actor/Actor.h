@@ -34,6 +34,9 @@ namespace Wanted
 		// 삭제가 될 때 호출될 이벤트 함수.
 		virtual void OnDestroy();
 
+		// 게임 플레이 리셋 함수
+		virtual void Reset();
+
 		// 게임 종료 함수.
 		void QuitGame();
 

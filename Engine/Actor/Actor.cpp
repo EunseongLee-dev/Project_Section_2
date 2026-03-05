@@ -61,6 +61,10 @@ namespace Wanted
 	{
 	}
 
+	void Actor::Reset()
+	{
+	}
+
 	void Actor::QuitGame()
 	{
 		// 엔진 종료 요청.
