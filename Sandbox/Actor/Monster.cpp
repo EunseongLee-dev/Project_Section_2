@@ -3,6 +3,9 @@
 #include "Actor/Player.h"
 #include "Level/ArenaLevel.h"
 #include "Render/Renderer.h"
+#include "Astar/Astar.h"
+
+
 
 Monster::Monster()
 	: Actor(L"★")
@@ -86,8 +89,7 @@ void Monster::Tick(float deltaTime)
 	}
 	case State::Chase:
 	{
-		// 플레이어를 발견 했을 때
-		
+		// RGB 색상 조절
 		// 색상 변경을 위해 flashTimer 값 누적 갱신
 		flashTimer += deltaTime;
 
@@ -108,6 +110,41 @@ void Monster::Tick(float deltaTime)
 
 			// 타이머를 다시 0으로 세팅
 			flashTimer = 0.0f;
+		}
+
+		// A* 경로 갱신
+		pathUpdateTimer += deltaTime;
+		// 딜레이 설정 값 보다 클 때만 A* 갱신
+		if (pathUpdateTimer >= pathUpdateDelay)
+		{
+			// 형변환 체크
+			ArenaLevel* arena = GetOwner()->As<ArenaLevel>();
+			
+			// 형변환 성공 했다면
+			if (arena)
+			{
+				// A* 호출하여 경로 저장
+				currentPath = Astar::FindPath(
+					GetPosition(),
+					targetPlayer->GetPosition(),
+					arena);
+			}
+			// 타이머 시간 초기화
+			pathUpdateTimer = 0.0f;
+		}
+
+		// 실제 거리 이동
+		moveTimer += deltaTime;
+		// 딜레이 값보다 클 때만 이동
+		if (moveTimer >= moveDelay)
+		{
+			// 경로를 찾았고, 내 다음 인덱스가 있다면 이동
+			if (currentPath.size() > 1)
+			{
+				SetPosition(currentPath[1]);
+			}
+			// 타이머 초기화
+			moveTimer = 0.0f;
 		}
 		break;
 	}

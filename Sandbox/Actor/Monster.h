@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Actor/Actor.h"
+#include <vector>
 
 using namespace Wanted;
 
@@ -56,5 +57,18 @@ private:
 
 	// 색상 변경 인덱스
 	int colorIndex = 0;
+
+	// A* 저장할 리스트
+	std::vector<Vector2> currentPath;
+
+	// 길 찾기 추가 타이머
+	float pathUpdateTimer = 0.0f;
+
+	// 설정 값마다 길 찾기
+	float pathUpdateDelay = 0.5f;
+
+	// 몬스터 속도 조절
+	float moveTimer = 0.0f;
+	float moveDelay = 0.15f;
 };
 
