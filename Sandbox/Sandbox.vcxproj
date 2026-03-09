@@ -95,6 +95,7 @@
     <ClCompile Include="Astar\Astar.cpp" />
     <ClCompile Include="Level\ArenaLevel.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="QuadTree\QuadTree.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor\Monster.h" />
@@ -102,6 +103,8 @@
     <ClInclude Include="Astar\Astar.h" />
     <ClInclude Include="Astar\Node.h" />
     <ClInclude Include="Level\ArenaLevel.h" />
+    <ClInclude Include="QuadTree\Node.h" />
+    <ClInclude Include="QuadTree\QuadTree.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

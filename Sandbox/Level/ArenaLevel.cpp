@@ -117,6 +117,9 @@ bool ArenaLevel::LoadMap(const wchar_t* filename)
 
 void ArenaLevel::Draw()
 {
+    // 기본 버퍼 세팅
+    wchar_t tileStr[2] = { L' ', L'\0' };
+
     // 카메라가 비추는 시작점 부터 끝점까지만 루프
     for (int y = cameraPos.y; y < cameraPos.y + viewHeight; ++y)
     {
@@ -149,19 +152,140 @@ void ArenaLevel::Draw()
                 tileColor = Color::Green;
             }
 
+            // 해당 칸에 글자 담기
+            tileStr[0] = tile;
+
             // x 좌표에 2를 곱해서 한 칸씩 출력
-            Renderer::Get().Submit (std::wstring(1, tile).c_str(),
+            Renderer::Get().Submit (tileStr,
                 Vector2(x * 2, y), tileColor);
         }
     }
 
     // 엔진 Level의 Draw() 함수 호출
     Level::Draw();
-}
+
+    // 쿼드트리에 루트 노드가 있고, 토글 버튼이 true일때
+    if (showQuadTree && rootNode)
+    {
+        // 구역 정보를 저장 할 배열 생성
+        std::vector<Rect> boundaries;
+        // 각 구역 정보 저장 함수 호출
+        rootNode->GetBoundaries(boundaries);
+
+        // 저장된 구역 좌표값 순회
+        for (const Rect& r : boundaries)
+        {
+            // 가로 테두리 그리기
+            for (int ix = 0; ix <= r.width; ++ix)
+            {
+                // 가로 2배
+                int curX = (r.x + ix) * 2;
+
+                // 상단 좌표에 그리기
+                Renderer::Get().Submit(
+                    L"━",
+                    Vector2((r.x + ix) * 2, r.y),
+                    Color::Cyan, 100);
+
+                // 하단 좌표에 그리기
+                Renderer::Get().Submit(
+                    L"━",
+                    Vector2((r.x + ix) * 2, (r.y + r.height)),
+                    Color::Cyan, 100);
+            }
+
+            // 세로 테두리 그리기
+            for (int iy = 0; iy <= r.height; ++iy)
+            {
+                int curY = r.y + iy;
+
+                // 좌측 좌표에 그리기
+                Renderer::Get().Submit(
+                    L"┃",
+                    Vector2(r.x * 2, (r.y + iy)),
+                    Color::Cyan, 100);
+
+                // 우측 좌표에 그리기
+                Renderer::Get().Submit(
+                    L"┃",
+                    Vector2((r.x + r.width) * 2, (r.y + iy)),
+                    Color::Cyan, 100);
+            }
+        }
+    }
+} 
 
 void ArenaLevel::Tick(float deltaTime)
 {
+
+    // 기존 루트 노드 해제(쿼드트리)
+    if (rootNode)
+    {
+        delete rootNode;
+        rootNode = nullptr;
+    }
+
+    // 루트 노드 생성(쿼드트리)
+    rootNode = new QuadTree(0, 0, mapWidth, mapHeight);
+
+    // 액터 객체 순회
+    for (Actor* actor : actors)
+    {
+        // 액터가 실제 살아있는지 확인
+        if (actor->IsActive())
+        {
+            // 쿼드트리에 액터 넘기기
+            rootNode->Insert(actor);
+        }
+    }
+
     Level::Tick(deltaTime);
+
+    // 쿼드트리 시각화 토글
+    if (Input::Get().GetKeyDown('Q'))
+    {
+        // NOT연산자로 bool 타입 변경
+        showQuadTree = !showQuadTree;
+    }
+
+    if (Input::Get().GetKeyDown('G'))
+    {
+        for (int ix = 0; ix < 100; ++ix)
+        {
+            // 랜덤 스폰 좌표 및 성공여부
+            Vector2 spawnPos;
+            bool isSuccess = false;
+
+            // 성공할 좌표를 찾을 때까지 반복
+            while (!isSuccess)
+            {
+                spawnPos.x = rand() % mapWidth;
+                spawnPos.y = rand() % mapHeight;
+
+                // 랜덤 위치 값에 다른 액터가 있는지 확인
+                if (IsWalkable(spawnPos.x, spawnPos.y) &&
+                    GetActorAt(spawnPos) == nullptr)
+                {
+                    // 위치에 다른 액터가 없을경우
+                    isSuccess = true;
+                }
+            }
+
+            // 해당 위치에 몬스터 생성
+            Monster* monster = new Monster();
+            // 해당 액터의 주인 명시
+            monster->SetOwner(this);
+            // 랜덤 스폰된 객체 명시
+            monster->SetGenerated(true);
+
+            monster->BeginPlay();
+            monster->SetPosition(spawnPos);
+            // 리셋 대비
+            monster->SetSpawnPoint(spawnPos);
+            // 최종 엔진에 등록
+            AddNewActor(monster);
+        }
+    }
 
     // R(리셋) 키가 눌렸다면 리셋 함수 호출
     if (Input::Get().GetKeyDown('R'))
@@ -233,6 +357,28 @@ void ArenaLevel::ResetAllActors()
     // 모든 액터를 순회하여 리셋 호출
     for (Actor* actor : actors)
     {
-        actor->Reset();
+        // 형변환 체크
+        Monster* monster = actor->As<Monster>();
+        
+        // 조건 체크
+        if (monster)
+        {
+            // 랜덤 생성된 액터인지 확인
+            if (monster->IsGenerated())
+            {
+                // 랜덤 생성된 액터라면 삭제 함수 호출
+                monster->Destroy();
+            }
+            else
+            {
+                // 원래 맵에 있던 몬스터는 생성 위치로 이동
+                monster->Reset();
+            }
+        }
+        else
+        {
+            // 몬스터가 아닌 액터는 리셋
+            actor->Reset();
+        }
     }
 }

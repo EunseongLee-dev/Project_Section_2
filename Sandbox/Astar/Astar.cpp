@@ -3,6 +3,8 @@
 
 std::vector<Vector2> Wanted::Astar::FindPath(Vector2 start, Vector2 end, ArenaLevel* arena)
 {
+	// 메모리 누수 방어 리스트
+	std::vector<Node*> allNodes;
 	// 역추적 리스트 저장
 	std::vector<Vector2> finalPath;
 	// 탐색 해야할 노드 저장
@@ -12,6 +14,7 @@ std::vector<Vector2> Wanted::Astar::FindPath(Vector2 start, Vector2 end, ArenaLe
 
 	// 출발점 노드 생성 및 초기화
 	Node* startNode = new Node(start);
+	allNodes.emplace_back(startNode);
 	startNode->g = 0;
 	startNode->h = GetHeuristic(start, end);
 	startNode->UpdateF();
@@ -109,6 +112,7 @@ std::vector<Vector2> Wanted::Astar::FindPath(Vector2 start, Vector2 end, ArenaLe
 				{
 					// 새로운 노드 생성
 					Node* newNode = new Node(neighborPos);
+					allNodes.emplace_back(newNode);
 
 					// 거리 비용 입력
 					newNode->g = nextG;
@@ -141,17 +145,11 @@ std::vector<Vector2> Wanted::Astar::FindPath(Vector2 start, Vector2 end, ArenaLe
 		}
 	}
 	// 메모리 해제
-	for (Node* n : Openlist)
+	for (Node* n : allNodes)
 	{
 		delete n;
-		n = nullptr;
 	}
-
-	for (Node* n : Closedlist)
-	{
-		delete n;
-		n = nullptr;
-	}
+	allNodes.clear();
 
 	// 최종 경로 반환
 	return finalPath;

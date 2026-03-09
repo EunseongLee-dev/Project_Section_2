@@ -27,14 +27,23 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Reset() override;
 
-	//virtual void Draw() override;
+	virtual void Draw() override;
 
 	// 몬스터 생성 위치를 저장하는 함수
 	inline void SetSpawnPoint(const Vector2& pos) { spawnPoint = pos; }
 
+	// 랜덤 몬스터 설정 변경 함수
+	inline void SetGenerated(bool value) { isGenerated = value; }
+
+	// 랜덤 몬스터 설정값 반환 함수
+	inline bool IsGenerated() const { return isGenerated; }
+
 private:
 	// 거리측정 및 상태 업데이트 함수
 	void UpdateState();
+
+	// 경로 탐색 함수
+	void MoveAlongPath();
 
 private:
 	// 초기 상태 세팅
@@ -45,6 +54,9 @@ private:
 
 	// 플레이어 감지 거리
 	float detectionRange = 10.0f;
+
+	// 플레이어 추격 포기 거리
+	float loseRange = 15.0f;
 
 	// Player 객체
 	Player* targetPlayer = nullptr;
@@ -69,6 +81,9 @@ private:
 
 	// 몬스터 속도 조절
 	float moveTimer = 0.0f;
-	float moveDelay = 0.15f;
+	float moveDelay = 0.33f;
+
+	// 랜덤 생성 몬스터 객체 관리
+	bool isGenerated = false;
 };
 

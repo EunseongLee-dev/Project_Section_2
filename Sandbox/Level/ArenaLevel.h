@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Level/Level.h"
+#include "QuadTree/QuadTree.h"
 
 #include <string>
 
@@ -8,6 +9,7 @@ using namespace Wanted;
 
 // 전방 선언
 class Player;
+
 
 class ArenaLevel: public Level
 {
@@ -30,6 +32,7 @@ public:
 	// Getter
 	inline Vector2 const GetcameraPos() { return cameraPos; }
 	inline Player* const GetPlayer() { return mainPlayer; }
+	inline QuadTree* GetRootNode() { return rootNode; }
 
 	// 리셋 함수
 	void ResetAllActors(); 
@@ -57,7 +60,11 @@ private:
 	// 화면에 보여줄 세로 칸 수
 	int viewHeight = 30;
 	
-	
+private:
+	// 쿼드트리 시작 노드
+	QuadTree* rootNode = nullptr;
+	// 시각화 토글 스위치
+	bool showQuadTree = false;
 
 };
 
